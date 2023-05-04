@@ -29,7 +29,9 @@ from DISClib.ADT import map as m
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Graphs import scc
 from DISClib.Algorithms.Graphs import dijsktra as djk
-# TODO Lab 11, agregar importaciones dfs y bfs
+# TO DO Lab 11, agregar importaciones dfs y bfs
+from DISClib.Algorithms.Graphs import dfs
+from DISClib.Algorithms.Graphs import bfs
 from DISClib.Utils import error as error
 assert config
 
@@ -53,12 +55,13 @@ def newAnalyzer():
            vertice determinado a todos los otros vértices del grafo
     """
     try:
-        # TODO Lab 11, agregar llave "search" para usar dfs y bfs
+        # TO DO Lab 11, agregar llave "search" para usar dfs y bfs
         analyzer = {
             'stops': None,
             'connections': None,
             'components': None,
             'paths': None,
+            'search': None
         }
 
         analyzer['stops'] = m.newMap(numelements=14000,
@@ -215,12 +218,15 @@ def searchPaths(analyzer, initialStation, method):
     Returns:
         dict: devuelve el analyzer del modelo
     """
-    # TODO Lab 11, ejectutar DepthFirstSearch de dfs
+    # TO DO Lab 11, ejectutar DepthFirstSearch de dfs
     if method == "dfs":
-        pass
-    # TODO Lab 11, ejectutar BreadhtFisrtSearch de bfs
+        struct = dfs.DepthFirstSearch(analyzer['connections'],initialStation)
+        analyzer['search'] = struct
+    # TO DO Lab 11, ejectutar BreadhtFisrtSearch de bfs
     elif method == "bfs":
-        pass
+        struct = bfs.BreadhtFisrtSearch(analyzer['connections'],initialStation)
+        analyzer['search'] = struct
+        
     return analyzer
 
 
@@ -234,12 +240,17 @@ def hasSearchPath(analyzer, destStation, method):
         destStation (vertice): estacion de destino para el recorrido
         method (str, optional): algoritmo de busqueda. Por defecto es "dfs"
     """
-    # TODO Lab 11, ejectutar hasPathTo por dfs
+    # TO DO Lab 11, ejectutar hasPathTo por dfs
+    hasSearchPath = None
     if method == "dfs":
-        return None
-    # TODO Lab 11, ejectutar hasPathTo por bfs
+        #searchPaths(analyzer,destStation,method)
+        hasSearchPath = dfs.hasPathTo(analyzer['search'],destStation)
+        
+    # TO DO Lab 11, ejectutar hasPathTo por bfs
     elif method == "bfs":
-        return None
+        hasSearchPath = bfs.hasPathTo(analyzer['search'],destStation)
+        
+    return hasSearchPath
 
 
 def searchPathTo(analyzer, destStation, method):
@@ -255,14 +266,16 @@ def searchPathTo(analyzer, destStation, method):
     Returns:
         stack: devuele una pila con el camino encontrado en la busqueda.
     """
-    path = None
-    # TODO Lab 11, ejectutar pathTo por dfs
+
+    # TO DO Lab 11, ejectutar pathTo por dfs
     if method == "dfs":
-        pass
-    # TODO Lab 11, ejectutar pathTo por bfs
+        path = dfs.pathTo(analyzer['search'],destStation)
+        return path
+
+    # TO DO Lab 11, ejectutar pathTo por bfs
     elif method == "bfs":
-        pass
-    return path
+        path = bfs.pathTo(analyzer['search'],destStation)
+        return path
 
 
 def totalStops(analyzer):
@@ -350,3 +363,16 @@ def compareroutes(route1, route2):
         return 1
     else:
         return -1
+
+"""grafito = gr.newGraph(datastructure= "ADJ_LIST")
+mase = "mase"
+paulita = "paulita"
+yuyi = "yuyi"
+gr.insertVertex(grafito,mase)
+gr.insertVertex(grafito,paulita)
+gr.insertVertex(grafito,yuyi)
+gr.addEdge(grafito,mase,paulita,5)
+gr.addEdge(grafito,paulita,yuyi,3)
+gr.addEdge(grafito,mase,yuyi,9)
+rta = gr.removeVertex(grafito,yuyi)
+print(rta)"""
