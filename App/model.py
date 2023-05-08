@@ -364,15 +364,3 @@ def compareroutes(route1, route2):
     else:
         return -1
 
-"""grafito = gr.newGraph(datastructure= "ADJ_LIST")
-mase = "mase"
-paulita = "paulita"
-yuyi = "yuyi"
-gr.insertVertex(grafito,mase)
-gr.insertVertex(grafito,paulita)
-gr.insertVertex(grafito,yuyi)
-gr.addEdge(grafito,mase,paulita,5)
-gr.addEdge(grafito,paulita,yuyi,3)
-gr.addEdge(grafito,mase,yuyi,9)
-rta = gr.removeVertex(grafito,yuyi)
-print(rta)"""
